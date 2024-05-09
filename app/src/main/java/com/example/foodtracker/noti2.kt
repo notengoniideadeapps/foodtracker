@@ -1,4 +1,4 @@
-package com.example.original
+package com.example.foodtracker
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge

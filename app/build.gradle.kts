@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.original"
+    namespace = "com.example.foodtracker"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.original"
+        applicationId = "com.example.foodtracker"
         minSdk = 29
         targetSdk = 34
         versionCode = 1
@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
@@ -47,4 +50,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation("com.google.code.gson:gson:2.8.6")
 }

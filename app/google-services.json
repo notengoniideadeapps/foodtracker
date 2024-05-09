@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:883376155496:android:06ec54d20e48b0c9c584dd",
         "android_client_info": {
-          "package_name": "com.example.original"
+          "package_name": "com.example.foodtracker"
         }
       },
       "oauth_client": [],
