@@ -18,7 +18,12 @@ object NotificationUtils {
             putExtra("notificationContent", notificationData.content)
         }
 
-        val pendingIntent = PendingIntent.getBroadcast(context, notificationData.id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent: PendingIntent
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            pendingIntent = PendingIntent.getBroadcast(context, notificationData.id, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        } else {
+            pendingIntent = PendingIntent.getBroadcast(context, notificationData.id, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (alarmManager.canScheduleExactAlarms()) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, notificationData.dateTime, pendingIntent)
