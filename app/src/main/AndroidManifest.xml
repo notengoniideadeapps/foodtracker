@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,12 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Original"
         tools:targetApi="31">
-        <activity
-            android:name=".calendarview"
-            android:exported="false" />
-
         <receiver
-            android:name=".NewAppWidget"
+            android:name=".NotificationWidgetProvider"
             android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -28,8 +25,12 @@
 
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/new_app_widget_info" />
+                android:resource="@xml/notification_widget_provider_info" />
         </receiver>
+
+        <activity
+            android:name=".CalendarView"
+            android:exported="false" />
 
         <activity
             android:name=".NotificationListActivity"
@@ -43,10 +44,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <receiver
+            android:name=".NotificationReceiver"
+            android:enabled="true"/>
 
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <service android:name=".NotificationWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
+
 
 </manifest>

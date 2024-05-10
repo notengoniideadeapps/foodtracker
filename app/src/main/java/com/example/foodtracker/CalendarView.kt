@@ -4,13 +4,12 @@ import android.annotation.SuppressLint
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.DatePicker
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
-class calendarview : AppCompatActivity() {
+class CalendarView : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,7 +17,7 @@ class calendarview : AppCompatActivity() {
         // Enable edge-to-edge display for immersive experience
         enableEdgeToEdge()
 
-        // Set the content view to the layout file activity_calendarview
+        // Set the content view to the layout file activity_CalendarView
         setContentView(R.layout.activity_calendarview)
 
         // Apply window insets to adjust view padding for system bars

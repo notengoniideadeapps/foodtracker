@@ -2,18 +2,20 @@ package com.example.foodtracker
 
 // Import necessary packages and classes
 import android.annotation.SuppressLint
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.net.Uri
 import android.os.Build
+import android.provider.Settings
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.NotificationManagerCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 // MainActivity class definition
@@ -23,13 +25,9 @@ class MainActivity : AppCompatActivity() {
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             hasNotificationPermissionGranted = isGranted
-            // Check if notification permission is not granted
             if (!isGranted) {
-                // If device is running Android 12 or later
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    // If device is running Android 12L (API level 33) or later
                     if (Build.VERSION.SDK_INT >= 33) {
-                        // If rationale for notification permission is needed
                         if (shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS)) {
                             showNotificationPermissionRationale()
                         } else {
@@ -38,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                // If notification permission is granted, show a toast message
                 Toast.makeText(
                     applicationContext,
                     "notification permission granted",
@@ -46,7 +43,36 @@ class MainActivity : AppCompatActivity() {
                 )
                     .show()
             }
+
+            // Check if notification permissions are granted
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val notificationManager =
+                    getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+                val isEnabled = notificationManager.areNotificationsEnabled()
+
+                if (!isEnabled) {
+                    // Open the app notification settings if notifications are not enabled
+                    val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    startActivity(intent)
+
+                    return@registerForActivityResult
+                }
+            } else {
+                val areEnabled = NotificationManagerCompat.from(this).areNotificationsEnabled()
+
+                if (!areEnabled) {
+                    // Open the app notification settings if notifications are not enabled
+                    val intent = Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
+                    intent.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                    startActivity(intent)
+
+                    return@registerForActivityResult
+                }
+            }
         }
+
 
     // Function to show dialog for notification permission settings
     private fun showSettingDialog() {
@@ -108,7 +134,7 @@ class MainActivity : AppCompatActivity() {
         // Set a click listener for the calendar button
         calendarButton.setOnClickListener {
             // Create an intent to navigate to CalendarActivity
-            val intent = Intent(this@MainActivity, calendarview::class.java)
+            val intent = Intent(this@MainActivity, CalendarView::class.java)
             // Start the CalendarActivity
             startActivity(intent)
         }

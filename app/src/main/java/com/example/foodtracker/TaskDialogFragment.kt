@@ -62,12 +62,13 @@ class TaskDialogFragment : DialogFragment() {
                     // Get task name and description from EditTexts
                     val taskName = taskNameEditText.text.toString()
                     val taskDescription = taskDescriptionEditText.text.toString()
+                    val notificationId = System.currentTimeMillis()
                     // Create a NotificationData instance with task details
-                    val notificationData = NotificationData(0, taskName, taskDescription, calendar.timeInMillis)
-                    // Schedule the notification
-                    NotificationUtils.scheduleNotification(requireContext(), notificationData)
+                    val notificationData = NotificationData(notificationId, taskName, taskDescription, calendar.timeInMillis)
                     // Save the notification data
                     NotificationStorage.saveNotification(requireContext(), notificationData)
+                    // Schedule the notification
+                    NotificationUtils.scheduleNotification(requireContext(), notificationData)
                 })
             .setNegativeButton("Cancel",
                 DialogInterface.OnClickListener { dialog, id ->
