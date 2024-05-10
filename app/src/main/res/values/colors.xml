@@ -3,5 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="yellow">#fcf803</color>
+    <color name="pail">#60fcf803</color>
+
     <color name="blue">#0320fc</color>
 </resources>
