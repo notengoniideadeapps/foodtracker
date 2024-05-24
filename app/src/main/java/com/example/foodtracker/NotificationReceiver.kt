@@ -1,6 +1,5 @@
 package com.example.foodtracker
 
-// Import necessary packages and classes
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -11,7 +10,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import android.annotation.SuppressLint
 
-// NotificationReceiver class definition
 class NotificationReceiver : BroadcastReceiver() {
 
     @SuppressLint("MissingPermission")
@@ -20,7 +18,7 @@ class NotificationReceiver : BroadcastReceiver() {
         val notificationTitle = intent.getStringExtra("notificationTitle")
         val notificationContent = intent.getStringExtra("notificationContent")
 
-        val channelId = "notification_channel"
+        val channelId = "notificationChannel"
         createNotificationChannel(context, channelId)
 
         val builder = NotificationCompat.Builder(context, channelId)
@@ -31,7 +29,6 @@ class NotificationReceiver : BroadcastReceiver() {
 
         val notificationManager = NotificationManagerCompat.from(context)
 
-        // notificationId is a unique int for each notification that you must define
         notificationManager.notify(notificationId, builder.build())
     }
 

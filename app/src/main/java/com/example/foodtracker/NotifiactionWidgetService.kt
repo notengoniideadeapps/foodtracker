@@ -4,9 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
-import com.example.foodtracker.NotificationData
-import com.example.foodtracker.NotificationStorage
-import com.example.foodtracker.R
+
 
 class NotificationWidgetService : RemoteViewsService() {
 

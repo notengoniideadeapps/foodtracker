@@ -1,15 +1,12 @@
 package com.example.foodtracker
 
-// Import necessary packages and classes
 import android.annotation.SuppressLint
 import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 
-// NotificationUtils object definition
 object NotificationUtils {
 
     @SuppressLint("UnspecifiedImmutableFlag", "ScheduleExactAlarm")
@@ -21,7 +18,6 @@ object NotificationUtils {
         intent.putExtra("notificationTitle", notificationData.title)
         intent.putExtra("notificationContent", notificationData.content)
 
-        // Create a PendingIntent for the broadcast
         val pendingIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             PendingIntent.getBroadcast(
                 context,
@@ -41,7 +37,7 @@ object NotificationUtils {
         // Get the AlarmManager service
         val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
-        // Schedule the notification
+        // schedule the notification
         alarmManager.setExactAndAllowWhileIdle(
             AlarmManager.RTC_WAKEUP,
             notificationData.dateTime,

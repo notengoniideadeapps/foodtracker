@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">original</string>
+    <string name="app_name">FoodTracker</string>
     <string name="channel_name">Notification foodtracker</string>
     <string name="channel_desc">Notification foodtracker desc</string>
     <string name="appwidget_text">EXAMPLE</string>

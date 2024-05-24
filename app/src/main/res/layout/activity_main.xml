@@ -12,28 +12,41 @@
         android:id="@+id/foodbutton"
         android:layout_width="78dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/foodlist"
         android:backgroundTint="@color/black"
         android:textFontWeight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.756"
+        app:layout_constraintHorizontal_bias="0.888"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/calendarbutton"
         android:layout_width="78dp"
         android:layout_height="65dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="36dp"
         android:background="@drawable/addfood"
         android:textFontWeight="1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.261"
+        app:layout_constraintHorizontal_bias="0.111"
         app:layout_constraintStart_toStartOf="parent"
         app:tint="@color/yellow" />
 
+
+    <Button
+        android:id="@+id/smsbutton"
+        android:layout_width="78dp"
+        android:layout_height="65dp"
+        android:layout_marginBottom="36dp"
+        android:background="@drawable/sms"
+        android:backgroundTint="@color/black"
+        android:textFontWeight="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView"

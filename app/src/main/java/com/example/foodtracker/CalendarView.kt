@@ -13,14 +13,8 @@ class CalendarView : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Enable edge-to-edge display for immersive experience
         enableEdgeToEdge()
-
-        // Set the content view to the layout file activity_CalendarView
         setContentView(R.layout.activity_calendarview)
-
-        // Apply window insets to adjust view padding for system bars
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -29,7 +23,6 @@ class CalendarView : AppCompatActivity() {
 
         // Initialize DatePicker widget
         val datePicker = findViewById<DatePicker>(R.id.date) as DatePicker
-
         // Set initial date to current date
         val calendar: Calendar = Calendar.getInstance()
         datePicker.init(calendar.get(Calendar.YEAR),
@@ -40,13 +33,12 @@ class CalendarView : AppCompatActivity() {
             val taskDialogFragment = TaskDialogFragment()
 
             // Pass selected date to TaskDialogFragment
-            val args = Bundle()
-            args.putInt("year", year)
-            args.putInt("month", monthOfYear)
-            args.putInt("day", dayOfMonth)
+            val selectedDate = Bundle()
+            selectedDate.putInt("year", year)
+            selectedDate.putInt("month", monthOfYear)
+            selectedDate.putInt("day", dayOfMonth)
 
-            taskDialogFragment.arguments = args
-
+            taskDialogFragment.arguments = selectedDate
             // Show TaskDialogFragment
             taskDialogFragment.show(supportFragmentManager, "TaskDialogFragment")
         }

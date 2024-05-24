@@ -1,13 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.Original" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.foodtracker" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.Original" parent="Base.Theme.Original" />
+    <style name="Theme.foodtracker" parent="Base.Theme.foodtracker" />
 
-    <style name="Theme.Original.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
+    <style name="Theme.foodtracker.AppWidgetContainerParent" parent="@android:style/Theme.DeviceDefault">
         <!-- Radius of the outer bound of widgets to make the rounded corners -->
         <item name="appWidgetRadius">16dp</item>
         <!--
@@ -17,7 +17,7 @@
         <item name="appWidgetInnerRadius">8dp</item>
     </style>
 
-    <style name="Theme.Original.AppWidgetContainer" parent="Theme.Original.AppWidgetContainerParent">
+    <style name="Theme.foodtracker.AppWidgetContainer" parent="Theme.foodtracker.AppWidgetContainerParent">
         <!-- Apply padding to avoid the content of the widget colliding with the rounded corners -->
         <item name="appWidgetPadding">16dp</item>
     </style>

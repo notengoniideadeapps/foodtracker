@@ -5,9 +5,7 @@ import android.appwidget.AppWidgetProvider
 import android.content.Context
 import android.content.Intent
 import android.widget.RemoteViews
-import com.example.foodtracker.NotificationStorage
-import com.example.foodtracker.R
-import com.example.foodtracker.NotificationWidgetService
+
 
 class NotificationWidgetProvider : AppWidgetProvider() {
 
@@ -16,7 +14,7 @@ class NotificationWidgetProvider : AppWidgetProvider() {
             val views = RemoteViews(context.packageName, R.layout.notification_widget_provider)
 
             val intent = Intent(context, NotificationWidgetService::class.java)
-            views.setRemoteAdapter(R.id.appwidget_list, intent)
+            views.setRemoteAdapter(R.id.appwidget_list,                 intent)
 
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }

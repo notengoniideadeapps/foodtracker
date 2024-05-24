@@ -1,6 +1,5 @@
 package com.example.foodtracker
 
-// Import necessary packages and classes
 import android.annotation.SuppressLint
 import android.app.NotificationManager
 import android.content.Context
@@ -14,15 +13,19 @@ import android.net.Uri
 import android.os.Build
 import android.provider.Settings
 import android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+import android.telephony.SmsManager
+import android.util.Log
+import android.widget.EditText
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationManagerCompat
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-// MainActivity class definition
+
 class MainActivity : AppCompatActivity() {
 
     // Variable to track notification permission
-    private val notificationPermissionLauncher =
+    private val notificationPermissionInitializer =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             hasNotificationPermissionGranted = isGranted
             if (!isGranted) {
@@ -73,15 +76,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
-    // Function to show dialog for notification permission settings
+    // popup dialog for notification permission settings
     private fun showSettingDialog() {
         MaterialAlertDialogBuilder(
             this,
             com.google.android.material.R.style.MaterialAlertDialog_Material3
         )
             .setTitle("Notification Permission")
-            .setMessage("Notification permission is required, Please allow notification permission from setting")
+            .setMessage("Notification permission is required to use this application, Please allow notification permission from setting")
             .setPositiveButton("Ok") { _, _ ->
                 val intent = Intent(ACTION_APPLICATION_DETAILS_SETTINGS)
                 intent.data = Uri.parse("package:$packageName")
@@ -91,7 +93,7 @@ class MainActivity : AppCompatActivity() {
             .show()
     }
 
-    // Function to show rationale for notification permission
+    //  rationale for notification permission
     private fun showNotificationPermissionRationale() {
 
         MaterialAlertDialogBuilder(
@@ -102,7 +104,7 @@ class MainActivity : AppCompatActivity() {
             .setMessage("Notification permission is required, to show notification")
             .setPositiveButton("Ok") { _, _ ->
                 if (Build.VERSION.SDK_INT >= 33) {
-                    notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    notificationPermissionInitializer.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
             .setNegativeButton("Cancel", null)
@@ -112,26 +114,21 @@ class MainActivity : AppCompatActivity() {
     // Variable to track if notification permission is granted
     var hasNotificationPermissionGranted = false
 
-    // Function called when activity is created
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        // Enable edge-to-edge display for immersive experience
         enableEdgeToEdge()
-        // Set the content view to the layout file activity_main
         setContentView(R.layout.activity_main)
 
         // If device is running Android 12L (API level 33) or later, request notification permission
         if (Build.VERSION.SDK_INT >= 33) {
-            notificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+            notificationPermissionInitializer.launch(android.Manifest.permission.POST_NOTIFICATIONS)
         } else {
-            // If device is running earlier version of Android, consider notification permission as granted
+            // consider notification permission as granted
             hasNotificationPermissionGranted = true
         }
 
-        // Find the calendar button by its id
         val calendarButton = findViewById<Button>(R.id.calendarbutton)
-        // Set a click listener for the calendar button
         calendarButton.setOnClickListener {
             // Create an intent to navigate to CalendarActivity
             val intent = Intent(this@MainActivity, CalendarView::class.java)
@@ -139,14 +136,45 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Find the notification button by its id
-        val notificationButton = findViewById<Button>(R.id.foodbutton)
-        // Set a click listener for the notification button
-        notificationButton.setOnClickListener {
-            // Create an intent to navigate to NotificationActivity
+        val listButton = findViewById<Button>(R.id.foodbutton)
+        listButton.setOnClickListener {
             val intent = Intent(this@MainActivity, NotificationListActivity::class.java)
-            // Start the NotificationActivity
             startActivity(intent)
         }
+
+        val smsButton = findViewById<Button>(R.id.smsbutton)
+        smsButton.setOnClickListener {
+            val builder = AlertDialog.Builder(this)
+            val inflater = layoutInflater
+            val dialogLayout = inflater.inflate(R.layout.sms, null)
+            val message = dialogLayout.findViewById<EditText>(R.id.smsedit)
+            var number = " "
+            val smsMessage = "Hi, I am using food tracker by Michael Awoyemi. Join me!!! "
+            val smsManager: SmsManager
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                smsManager = this.getSystemService(SmsManager::class.java)
+            } else {
+                smsManager = SmsManager.getDefault()
+            }
+            with(builder) {
+                setTitle("Phone number")
+                setPositiveButton("<Send>") { dialog, which ->
+                    number = message.text.toString()
+                    try {
+                        smsManager.sendTextMessage(number, null, smsMessage, null, null)
+                        Toast.makeText(applicationContext, "SMS Message Sent!", Toast.LENGTH_LONG).show()
+                    } catch (e: Exception) {
+                        Toast.makeText(applicationContext, "SMS failed to send!!", Toast.LENGTH_LONG).show()
+                    }
+                }
+                setNegativeButton("cancel") { dialog, which ->
+                    Log.d("Main", "SMS Cacncelled")
+                }
+                setView(dialogLayout)
+                show()
+            }
+
+        }
+
     }
 }
